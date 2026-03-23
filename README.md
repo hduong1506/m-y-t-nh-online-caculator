@@ -625,7 +625,7 @@
   <div class="page">
     <section class="hero">
       <h1>🎀 Hello Kitty Premium Calculator 🎀</h1>
-      <p>Máy tính màu hồng siêu cute, nhưng bấm dấu bằng là đòi tiền như đời thật 💸</p>
+      <p>Máy tính màu hồng siêu cute</p>
       <div class="kitty-badge">
         <span>🐱</span>
         <span>Premium Cute Mode Enabled</span>
@@ -638,14 +638,14 @@
         <div class="calc-header">
           <div>
             <div class="calc-title">Kitty Calculator</div>
-            <div class="calc-sub">Bấm = để mở giao diện VIP</div>
+            <div class="calc-sub">Máy tính Hello Kitty</div>
           </div>
           <div style="font-size: 1.8rem;">🎀</div>
         </div>
 
         <div class="display-wrap">
           <input type="text" class="display" id="display" readonly placeholder="0" />
-          <div class="display-hint">Enter trên bàn phím cũng mở Premium</div>
+          <div class="display-hint">Enter trên bàn phím cũng ra kết quả</div>
         </div>
 
         <div class="buttons">
@@ -680,19 +680,17 @@
         <div class="features">
           <div class="feature">💖 Giao diện Hello Kitty hồng pastel siêu nổi</div>
           <div class="feature">🎀 Nút bấm có hiệu ứng nổi + glow + hover</div>
-          <div class="feature">💸 Bấm dấu bằng là hiện popup Upgrade to Premium</div>
+          <div class="feature">💸 Bấm dấu bằng là hiện kết quả siêu nhanh</div>
           <div class="feature">🛍️ Có 3 gói VIP: tuần / tháng / năm</div>
-          <div class="feature">🩷 Popup cuộn được, full trang cuộn mượt</div>
+          <div class="feature">🌸 Hiệu ứng mượt mà khi di chuyển chuột</div>
         </div>
 
         <div class="premium-preview">
           <div class="section-title" style="font-size:1.1rem; margin-bottom:10px;">Preview logic "máy tính online"</div>
           <p>
-            Máy tính thì tính được... nhưng không cho ra kết quả 😌<br />
-            Khi ấn dấu bằng, nó sẽ mở giao diện "Upgrade to Premium" với 3 gói:
-            <strong>49K / 199K / 999K</strong>.<br /><br />
-            Đúng kiểu app thời nay: cho dùng miễn phí nửa bước rồi chặn cổng thu phí.
-          </p>
+            Máy tính siêu nhanh, tiện lợi😌<br />
+            Khi ấn dấu bằng, nó sẽ ra kết quả</strong>.<br /><br />
+           siêu tiện lợi và nhanh chóng
         </div>
       </div>
     </section>
@@ -703,9 +701,7 @@
 
     <div class="footer-space">
       <div>
-        🌸 Đây là vùng nội dung kéo xuống để trang web có thể lướt lên lướt xuống full.<br /><br />
-        Chủ nhân up lên GitHub Pages là chạy luôn, không cần tách file.<br />
-        Con người thích làm mọi thứ phức tạp, nên tôi gộp hết vào 1 file cho đỡ phá. 💀
+        nhìn cái gì, tưởng có hướng dẫn sử dụng à? <br /> à web được tạo bởi hduowgg nhá!
       </div>
     </div>
   </div>

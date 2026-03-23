@@ -6,211 +6,188 @@
   <title>Hello Kitty Premium Calculator</title>
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: "Comic Sans MS", "Trebuchet MS", sans-serif;
-      user-select: none;
+      font-family: "Comic Sans MS", "Segoe UI", cursive, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       min-height: 100vh;
-      overflow: hidden;
+      overflow-y: auto;
       background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.5), transparent 25%),
-        radial-gradient(circle at 80% 30%, rgba(255,255,255,0.4), transparent 25%),
-        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.35), transparent 25%),
-        linear-gradient(135deg, #ffd6ec, #ffc0e1, #ffb3da, #ff9fcf);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.35), transparent 20%),
+        radial-gradient(circle at 80% 30%, rgba(255,255,255,0.2), transparent 18%),
+        radial-gradient(circle at 50% 80%, rgba(255,255,255,0.25), transparent 22%),
+        linear-gradient(180deg, #ffd6ea, #ffb8d8, #ff9fc9);
+      color: #8a1c57;
       position: relative;
     }
 
-    .floating-hearts,
-    .floating-stars {
-      position: absolute;
+    body::before {
+      content: "";
+      position: fixed;
       inset: 0;
       pointer-events: none;
-      overflow: hidden;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.55) 2px, transparent 2px),
+        radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px);
+      background-size: 80px 80px, 40px 40px;
+      background-position: 0 0, 20px 20px;
+      opacity: 0.5;
       z-index: 0;
     }
 
-    .heart,
-    .star {
+    .floating-hearts {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .heart {
       position: absolute;
-      opacity: 0.35;
-      animation: floatUp linear infinite;
+      bottom: -50px;
       font-size: 18px;
+      animation: floatUp linear infinite;
+      opacity: 0.7;
+      user-select: none;
     }
 
     @keyframes floatUp {
       0% {
-        transform: translateY(100vh) scale(0.8) rotate(0deg);
+        transform: translateY(0) scale(0.8) rotate(0deg);
         opacity: 0;
       }
-      10% { opacity: 0.35; }
-      90% { opacity: 0.35; }
+      10% {
+        opacity: 0.9;
+      }
       100% {
-        transform: translateY(-20vh) scale(1.2) rotate(360deg);
+        transform: translateY(-120vh) scale(1.4) rotate(360deg);
         opacity: 0;
       }
     }
 
-    .calculator-wrapper {
+    .page {
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 420px;
-      animation: popIn 0.7s ease;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 30px 18px 80px;
     }
 
-    @keyframes popIn {
-      from {
-        transform: scale(0.85) translateY(30px);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-      }
+    .hero {
+      text-align: center;
+      margin-bottom: 24px;
+      animation: fadeInDown 0.8s ease;
     }
 
-    .kitty-ears {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 35px;
-      margin-bottom: -10px;
-      z-index: 3;
-      position: relative;
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: #ff2f8b;
+      text-shadow: 0 0 12px rgba(255,255,255,0.8);
+      margin-bottom: 8px;
     }
 
-    .ear {
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(145deg, #fff4fb, #ffd4eb);
-      border: 4px solid #ff8fc5;
-      transform: rotate(45deg);
-      border-radius: 12px;
-      box-shadow: 0 8px 18px rgba(255, 105, 180, 0.2);
-      position: relative;
+    .hero p {
+      font-size: 1rem;
+      color: #9e2d64;
+      font-weight: 700;
     }
 
-    .ear::after {
-      content: "";
-      position: absolute;
-      inset: 14px;
-      background: #ffb5d8;
-      border-radius: 10px;
-    }
-
-    .calculator {
-      background: rgba(255, 245, 251, 0.92);
-      backdrop-filter: blur(10px);
-      border: 4px solid #ff8fc5;
-      border-radius: 35px;
-      padding: 20px;
-      box-shadow:
-        0 20px 45px rgba(255, 20, 147, 0.22),
-        inset 0 0 0 4px rgba(255,255,255,0.45);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .calculator::before {
-      content: "";
-      position: absolute;
-      top: -80px;
-      right: -80px;
-      width: 180px;
-      height: 180px;
-      background: radial-gradient(circle, rgba(255,255,255,0.55), transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .kitty-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-      gap: 10px;
-    }
-
-    .kitty-title {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #ff3f9d;
-      text-shadow: 1px 1px 0 white;
-      letter-spacing: 0.5px;
-    }
-
-    .kitty-face {
-      display: flex;
+    .kitty-badge {
+      display: inline-flex;
       align-items: center;
       gap: 8px;
+      background: rgba(255,255,255,0.55);
+      border: 2px solid rgba(255,255,255,0.7);
+      padding: 10px 18px;
+      border-radius: 999px;
+      margin-top: 12px;
+      box-shadow: 0 10px 24px rgba(255, 85, 150, 0.18);
+      backdrop-filter: blur(10px);
     }
 
-    .kitty-bow {
-      width: 26px;
-      height: 20px;
-      background: #ff4ea2;
-      border-radius: 10px;
-      position: relative;
-      animation: wiggle 2s ease-in-out infinite;
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
     }
 
-    .kitty-bow::before,
-    .kitty-bow::after {
-      content: "";
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      background: #ff73b8;
-      border-radius: 50%;
-      top: 3px;
+    @media (min-width: 900px) {
+      .main-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: start;
+      }
     }
 
-    .kitty-bow::before { left: -6px; }
-    .kitty-bow::after { right: -6px; }
-
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(-8deg); }
-      75% { transform: rotate(8deg); }
+    .card {
+      background: rgba(255, 255, 255, 0.38);
+      backdrop-filter: blur(14px);
+      border: 2px solid rgba(255,255,255,0.55);
+      border-radius: 30px;
+      box-shadow: 0 18px 40px rgba(255, 71, 144, 0.22);
     }
 
-    .screen-box {
-      background: linear-gradient(180deg, #fff, #ffe9f5);
-      border: 3px solid #ff9fcd;
-      border-radius: 22px;
-      padding: 16px;
-      margin-bottom: 18px;
-      box-shadow: inset 0 6px 14px rgba(255, 182, 193, 0.35);
+    .calculator-card {
+      padding: 22px;
+      animation: fadeInUp 0.9s ease;
     }
 
-    .mini-status {
+    .calc-header {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      font-size: 0.8rem;
-      color: #ff68ae;
-      margin-bottom: 8px;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .calc-title {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #d81b72;
+    }
+
+    .calc-sub {
+      font-size: 0.85rem;
+      color: #a13667;
       font-weight: 700;
+    }
+
+    .display-wrap {
+      margin-bottom: 18px;
+      position: relative;
     }
 
     .display {
       width: 100%;
+      height: 88px;
       border: none;
       outline: none;
-      background: transparent;
+      border-radius: 22px;
+      padding: 16px 18px;
       text-align: right;
-      font-size: 2.1rem;
-      font-weight: 800;
-      color: #ff2f8c;
-      min-height: 50px;
-      overflow-x: auto;
-      white-space: nowrap;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      color: #b5145c;
+      background: rgba(255,255,255,0.8);
+      box-shadow:
+        inset 0 4px 10px rgba(255,255,255,0.8),
+        inset 0 -4px 10px rgba(255, 160, 205, 0.35);
+    }
+
+    .display-hint {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      text-align: right;
+      color: #9e2d64;
+      font-weight: 700;
     }
 
     .buttons {
@@ -221,76 +198,365 @@
 
     button {
       border: none;
+      outline: none;
       border-radius: 20px;
-      padding: 16px 10px;
-      font-size: 1.25rem;
-      font-weight: 800;
+      min-height: 64px;
       cursor: pointer;
-      transition: all 0.18s ease;
-      background: linear-gradient(180deg, #fff, #ffe7f4);
-      color: #ff2f8c;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #b3155d;
+      background: linear-gradient(180deg, #fff8fc, #ffd4e8);
       box-shadow:
-        0 8px 16px rgba(255, 105, 180, 0.18),
-        inset 0 -3px 0 rgba(255, 192, 203, 0.35);
+        0 8px 16px rgba(255, 75, 149, 0.18),
+        inset 0 2px 0 rgba(255,255,255,0.9);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+      user-select: none;
     }
 
     button:hover {
       transform: translateY(-3px) scale(1.03);
       box-shadow:
-        0 12px 20px rgba(255, 105, 180, 0.25),
-        inset 0 -3px 0 rgba(255, 192, 203, 0.35);
+        0 12px 24px rgba(255, 75, 149, 0.25),
+        inset 0 2px 0 rgba(255,255,255,1);
+      filter: brightness(1.03);
     }
 
     button:active {
-      transform: scale(0.96);
+      transform: translateY(1px) scale(0.98);
     }
 
     .operator {
-      background: linear-gradient(180deg, #ffd0e8, #ffb0d6);
+      background: linear-gradient(180deg, #ffc2df, #ff9fcb);
       color: #fff;
+      text-shadow: 0 1px 2px rgba(153, 0, 76, 0.35);
     }
 
     .special {
-      background: linear-gradient(180deg, #ffe7f4, #ffd1e8);
-      color: #ff3b95;
+      background: linear-gradient(180deg, #ffe4f1, #ffc7e2);
+      color: #c21868;
     }
 
     .equal {
       background: linear-gradient(135deg, #ff4fa0, #ff79c8);
       color: #fff;
-      font-size: 1.6rem;
+      text-shadow: 0 1px 3px rgba(143, 0, 70, 0.4);
       box-shadow:
-        0 10px 22px rgba(255, 79, 160, 0.35),
-        inset 0 -4px 0 rgba(255,255,255,0.15);
+        0 10px 24px rgba(255, 79, 160, 0.35),
+        inset 0 2px 0 rgba(255,255,255,0.35);
     }
 
     .zero {
       grid-column: span 2;
     }
 
-    .kitty-footer {
-      margin-top: 16px;
-      text-align: center;
-      color: #ff67ae;
-      font-size: 0.9rem;
-      font-weight: 700;
+    .side-panel {
+      padding: 22px;
+      animation: fadeInUp 1s ease;
     }
 
-    .premium-overlay {
+    .section-title {
+      font-size: 1.25rem;
+      color: #d81b72;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .features {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .feature {
+      background: rgba(255,255,255,0.52);
+      border: 2px solid rgba(255,255,255,0.6);
+      border-radius: 20px;
+      padding: 14px;
+      font-weight: 700;
+      color: #9e2d64;
+      box-shadow: 0 8px 20px rgba(255, 92, 156, 0.12);
+    }
+
+    .premium-preview {
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,240,248,0.72));
+      border-radius: 24px;
+      padding: 18px;
+      border: 2px dashed rgba(255, 87, 155, 0.35);
+    }
+
+    .premium-preview p {
+      line-height: 1.6;
+      font-weight: 700;
+      color: #9e2d64;
+    }
+
+    .scroll-info {
+      margin-top: 24px;
+      padding: 20px;
+      text-align: center;
+      background: rgba(255,255,255,0.35);
+      border-radius: 24px;
+      border: 2px solid rgba(255,255,255,0.5);
+      font-weight: 800;
+      color: #9e2d64;
+    }
+
+    .footer-space {
+      height: 500px;
+      margin-top: 24px;
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08)),
+        repeating-linear-gradient(
+          45deg,
+          rgba(255,255,255,0.18),
+          rgba(255,255,255,0.18) 12px,
+          rgba(255,255,255,0.06) 12px,
+          rgba(255,255,255,0.06) 24px
+        );
+      border: 2px solid rgba(255,255,255,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      color: #a52763;
+      font-size: 1.05rem;
+      font-weight: 900;
+    }
+
+    .modal {
       position: fixed;
       inset: 0;
-      background: rgba(255, 105, 180, 0.18);
-      backdrop-filter: blur(8px);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
+      background: rgba(113, 8, 53, 0.45);
+      backdrop-filter: blur(8px);
       z-index: 999;
+    }
+
+    .modal.show {
+      display: flex;
       animation: fadeIn 0.25s ease;
     }
 
-    .premium-overlay.active {
-      display: flex;
+    .modal-box {
+      width: 100%;
+      max-width: 760px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 30px;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.5), transparent 35%),
+        linear-gradient(180deg, #ffe3f1, #ffc6e1, #ffafd4);
+      border: 3px solid rgba(255,255,255,0.7);
+      box-shadow: 0 25px 60px rgba(146, 12, 72, 0.35);
+      position: relative;
+      animation: popIn 0.35s ease;
+    }
+
+    .close-btn {
+      position: sticky;
+      top: 0;
+      margin-left: auto;
+      display: block;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ff5aaa, #ff2f8b);
+      color: #fff;
+      font-size: 1.4rem;
+      z-index: 5;
+    }
+
+    .modal-head {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-head h2 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: #d40067;
+      text-shadow: 0 0 10px rgba(255,255,255,0.65);
+      margin-bottom: 8px;
+    }
+
+    .modal-head p {
+      color: #8e2458;
+      font-weight: 800;
+      line-height: 1.6;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    @media (min-width: 720px) {
+      .plans {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .plan {
+      background: rgba(255,255,255,0.65);
+      border: 2px solid rgba(255,255,255,0.75);
+      border-radius: 26px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 14px 26px rgba(255, 80, 150, 0.18);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .plan:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 30px rgba(255, 80, 150, 0.25);
+    }
+
+    .plan.popular {
+      border: 3px solid #ff3d97;
+      transform: scale(1.02);
+    }
+
+    .ribbon {
+      position: absolute;
+      top: 12px;
+      right: -32px;
+      background: #ff3d97;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 900;
+      padding: 6px 36px;
+      transform: rotate(35deg);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .plan h3 {
+      font-size: 1.35rem;
+      color: #d81b72;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 2rem;
+      color: #ff2f8b;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .price small {
+      font-size: 0.9rem;
+      color: #a13667;
+    }
+
+    .plan ul {
+      list-style: none;
+      text-align: left;
+      display: grid;
+      gap: 8px;
+      margin: 14px 0 18px;
+      color: #9b2f62;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .buy-btn {
+      width: 100%;
+      min-height: 52px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ff4fa0, #ff2f8b);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .payment-box {
+      margin-top: 22px;
+      background: rgba(255,255,255,0.55);
+      border-radius: 24px;
+      padding: 18px;
+      border: 2px solid rgba(255,255,255,0.65);
+    }
+
+    .payment-box h3 {
+      color: #d81b72;
+      margin-bottom: 10px;
+    }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 600px) {
+      .payment-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .payment-item {
+      background: rgba(255,255,255,0.72);
+      border-radius: 18px;
+      padding: 14px;
+      font-weight: 800;
+      color: #9e2d64;
+    }
+
+    .success {
+      display: none;
+      margin-top: 18px;
+      background: rgba(255,255,255,0.7);
+      border: 2px solid rgba(255,255,255,0.8);
+      border-radius: 22px;
+      padding: 18px;
+      text-align: center;
+      color: #c21868;
+      font-weight: 900;
+      animation: pulseGlow 1s infinite alternate;
+    }
+
+    .success.show {
+      display: block;
+    }
+
+    .tiny-note {
+      margin-top: 14px;
+      text-align: center;
+      color: #8e2458;
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes fadeIn {
@@ -298,497 +564,231 @@
       to { opacity: 1; }
     }
 
-    .premium-modal {
-      width: 100%;
-      max-width: 760px;
-      background: linear-gradient(180deg, #fff7fc, #ffe8f5);
-      border: 4px solid #ff8fc5;
-      border-radius: 32px;
-      padding: 24px;
-      box-shadow: 0 30px 60px rgba(255, 20, 147, 0.25);
-      position: relative;
-      animation: modalPop 0.35s ease;
-      overflow: hidden;
-    }
-
-    @keyframes modalPop {
+    @keyframes popIn {
       from {
-        transform: scale(0.9) translateY(20px);
         opacity: 0;
+        transform: scale(0.92) translateY(18px);
       }
       to {
-        transform: scale(1) translateY(0);
         opacity: 1;
+        transform: scale(1) translateY(0);
       }
     }
 
-    .premium-modal::before {
-      content: "🎀 ✨ 💖 🎀 ✨ 💖 🎀 ✨ 💖";
-      position: absolute;
-      top: 8px;
-      left: 18px;
-      right: 18px;
-      text-align: center;
-      font-size: 1rem;
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      font-size: 1.4rem;
-      background: linear-gradient(180deg, #ff9fd0, #ff6eb8);
-      color: white;
-      box-shadow: 0 8px 18px rgba(255, 105, 180, 0.25);
-    }
-
-    .premium-head {
-      text-align: center;
-      padding-top: 20px;
-      margin-bottom: 18px;
-    }
-
-    .premium-head h2 {
-      color: #ff2f8c;
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-
-    .premium-head p {
-      color: #ff5fa9;
-      font-weight: 700;
-      font-size: 1rem;
-    }
-
-    .premium-badge {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 16px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #ff5aa8, #ff86ca);
-      color: white;
-      font-weight: 800;
-      box-shadow: 0 8px 18px rgba(255, 105, 180, 0.22);
-      animation: pulse 1.8s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 20px;
-    }
-
-    .plan {
-      background: linear-gradient(180deg, #fff, #fff0f8);
-      border: 3px solid #ffc0de;
-      border-radius: 26px;
-      padding: 20px;
-      text-align: center;
-      position: relative;
-      transition: all 0.2s ease;
-      box-shadow: 0 12px 24px rgba(255, 182, 193, 0.2);
-      cursor: pointer;
-    }
-
-    .plan:hover {
-      transform: translateY(-6px) scale(1.02);
-      border-color: #ff7fbe;
-      box-shadow: 0 18px 30px rgba(255, 105, 180, 0.24);
-    }
-
-    .plan.selected {
-      border-color: #ff3f9d;
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 20px 34px rgba(255, 20, 147, 0.25);
-      background: linear-gradient(180deg, #fff6fb, #ffdff0);
-    }
-
-    .plan.popular::before {
-      content: "HOT";
-      position: absolute;
-      top: -12px;
-      right: 14px;
-      background: linear-gradient(135deg, #ff4fa0, #ff79c8);
-      color: white;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 800;
-      box-shadow: 0 8px 18px rgba(255, 105, 180, 0.25);
-    }
-
-    .plan .emoji {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-
-    .plan h3 {
-      color: #ff2f8c;
-      margin-bottom: 6px;
-      font-size: 1.2rem;
-    }
-
-    .plan .price {
-      font-size: 2rem;
-      font-weight: 900;
-      color: #ff3b95;
-      margin: 10px 0;
-    }
-
-    .plan .sub {
-      color: #ff6eb3;
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .plan ul {
-      list-style: none;
-      text-align: left;
-      color: #ff5fa9;
-      font-weight: 700;
-      font-size: 0.9rem;
-      display: grid;
-      gap: 8px;
-    }
-
-    .plan li::before {
-      content: "✔ ";
-      color: #ff2f8c;
-    }
-
-    .payment-box {
-      margin-top: 20px;
-      background: rgba(255,255,255,0.7);
-      border: 2px dashed #ff9fcd;
-      border-radius: 22px;
-      padding: 18px;
-    }
-
-    .payment-box h4 {
-      color: #ff2f8c;
-      margin-bottom: 10px;
-      font-size: 1.1rem;
-    }
-
-    .payment-methods {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .method {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: #fff;
-      border: 2px solid #ffd0e8;
-      color: #ff4fa0;
-      font-weight: 800;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .method.active {
-      border-color: #ff4fa0;
-      background: #ffe8f5;
-    }
-
-    .buy-btn {
-      width: 100%;
-      padding: 16px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #ff4fa0, #ff7ec6);
-      color: white;
-      font-size: 1.15rem;
-      font-weight: 900;
-      box-shadow: 0 12px 24px rgba(255, 79, 160, 0.28);
-    }
-
-    .loading-area {
-      margin-top: 14px;
-      display: none;
-      text-align: center;
-    }
-
-    .loading-area.active {
-      display: block;
-    }
-
-    .loading-text {
-      color: #ff4fa0;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 14px;
-      background: #ffe2f1;
-      border-radius: 999px;
-      overflow: hidden;
-      border: 2px solid #ffc0de;
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, #ff5aa8, #ff9fd0);
-      border-radius: 999px;
-      transition: width 0.2s linear;
-    }
-
-    .success-box {
-      display: none;
-      margin-top: 16px;
-      text-align: center;
-      background: linear-gradient(180deg, #fff, #fff1f8);
-      border: 2px solid #ffb0d6;
-      border-radius: 20px;
-      padding: 16px;
-      animation: popIn 0.4s ease;
-    }
-
-    .success-box.active {
-      display: block;
-    }
-
-    .success-box h4 {
-      color: #ff2f8c;
-      margin-bottom: 8px;
-      font-size: 1.2rem;
-    }
-
-    .success-box p {
-      color: #ff5fa9;
-      font-weight: 700;
-      line-height: 1.5;
-    }
-
-    .sparkles {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
+    @keyframes pulseGlow {
+      from {
+        box-shadow: 0 0 0 rgba(255, 79, 160, 0);
+      }
+      to {
+        box-shadow: 0 0 28px rgba(255, 79, 160, 0.35);
+      }
     }
 
     .sparkle {
-      position: absolute;
-      font-size: 16px;
-      animation: sparkleFly 1.2s ease forwards;
+      position: fixed;
+      font-size: 18px;
+      pointer-events: none;
+      z-index: 1000;
+      animation: sparkleFly 1.1s ease forwards;
     }
 
     @keyframes sparkleFly {
       0% {
-        opacity: 0;
-        transform: translate(0,0) scale(0.5);
-      }
-      20% {
         opacity: 1;
+        transform: translate(0, 0) scale(0.8);
       }
       100% {
         opacity: 0;
-        transform: translate(var(--x), var(--y)) scale(1.4) rotate(220deg);
+        transform: translate(var(--x), var(--y)) scale(1.5) rotate(180deg);
       }
     }
 
-    @media (max-width: 820px) {
-      .plans {
-        grid-template-columns: 1fr;
-      }
-
-      .premium-modal {
-        max-height: 90vh;
-        overflow-y: auto;
-      }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 12px;
     }
 
-    @media (max-width: 480px) {
-      .calculator {
-        padding: 16px;
-      }
+    ::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.35);
+      border-radius: 20px;
+    }
 
-      button {
-        padding: 14px 8px;
-        font-size: 1.1rem;
-      }
-
-      .display {
-        font-size: 1.7rem;
-      }
-
-      .premium-head h2 {
-        font-size: 1.6rem;
-      }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #ff86c3, #ff4fa0);
+      border-radius: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="floating-hearts" id="hearts"></div>
-  <div class="floating-stars" id="stars"></div>
+  <div class="floating-hearts" id="floatingHearts"></div>
 
-  <div class="calculator-wrapper">
-    <div class="kitty-ears">
-      <div class="ear"></div>
-      <div class="ear"></div>
+  <div class="page">
+    <section class="hero">
+      <h1>🎀 Hello Kitty Premium Calculator 🎀</h1>
+      <p>Máy tính màu hồng siêu cute, nhưng bấm dấu bằng là đòi tiền như đời thật 💸</p>
+      <div class="kitty-badge">
+        <span>🐱</span>
+        <span>Premium Cute Mode Enabled</span>
+        <span>💖</span>
+      </div>
+    </section>
+
+    <section class="main-grid">
+      <div class="card calculator-card">
+        <div class="calc-header">
+          <div>
+            <div class="calc-title">Kitty Calculator</div>
+            <div class="calc-sub">Bấm = để mở giao diện VIP</div>
+          </div>
+          <div style="font-size: 1.8rem;">🎀</div>
+        </div>
+
+        <div class="display-wrap">
+          <input type="text" class="display" id="display" readonly placeholder="0" />
+          <div class="display-hint">Enter trên bàn phím cũng mở Premium</div>
+        </div>
+
+        <div class="buttons">
+          <button onclick="clearDisplay()" class="special">C</button>
+          <button onclick="deleteLast()" class="special">⌫</button>
+          <button onclick="appendValue('%')" class="operator">%</button>
+          <button onclick="appendValue('/')" class="operator">÷</button>
+
+          <button onclick="appendValue('7')">7</button>
+          <button onclick="appendValue('8')">8</button>
+          <button onclick="appendValue('9')">9</button>
+          <button onclick="appendValue('*')" class="operator">×</button>
+
+          <button onclick="appendValue('4')">4</button>
+          <button onclick="appendValue('5')">5</button>
+          <button onclick="appendValue('6')">6</button>
+          <button onclick="appendValue('-')" class="operator">−</button>
+
+          <button onclick="appendValue('1')">1</button>
+          <button onclick="appendValue('2')">2</button>
+          <button onclick="appendValue('3')">3</button>
+          <button onclick="appendValue('+')" class="operator">+</button>
+
+          <button onclick="appendValue('0')" class="zero">0</button>
+          <button onclick="appendValue('.')">.</button>
+          <button onclick="showPremium()" class="equal">=</button>
+        </div>
+      </div>
+
+      <div class="card side-panel">
+        <div class="section-title">✨ Tính năng dễ thương</div>
+        <div class="features">
+          <div class="feature">💖 Giao diện Hello Kitty hồng pastel siêu nổi</div>
+          <div class="feature">🎀 Nút bấm có hiệu ứng nổi + glow + hover</div>
+          <div class="feature">💸 Bấm dấu bằng là hiện popup Upgrade to Premium</div>
+          <div class="feature">🛍️ Có 3 gói VIP: tuần / tháng / năm</div>
+          <div class="feature">🩷 Popup cuộn được, full trang cuộn mượt</div>
+        </div>
+
+        <div class="premium-preview">
+          <div class="section-title" style="font-size:1.1rem; margin-bottom:10px;">Preview logic "máy tính online"</div>
+          <p>
+            Máy tính thì tính được... nhưng không cho ra kết quả 😌<br />
+            Khi ấn dấu bằng, nó sẽ mở giao diện "Upgrade to Premium" với 3 gói:
+            <strong>49K / 199K / 999K</strong>.<br /><br />
+            Đúng kiểu app thời nay: cho dùng miễn phí nửa bước rồi chặn cổng thu phí.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="scroll-info">
+      👇 Kéo xuống dưới vẫn còn nội dung để test scroll full trang
     </div>
 
-    <div class="calculator">
-      <div class="kitty-header">
-        <div class="kitty-title">Hello Kitty Calculator 🎀</div>
-        <div class="kitty-face">
-          <div class="kitty-bow"></div>
-          <span style="font-size: 1.4rem;">🐱</span>
-        </div>
+    <div class="footer-space">
+      <div>
+        🌸 Đây là vùng nội dung kéo xuống để trang web có thể lướt lên lướt xuống full.<br /><br />
+        Chủ nhân up lên GitHub Pages là chạy luôn, không cần tách file.<br />
+        Con người thích làm mọi thứ phức tạp, nên tôi gộp hết vào 1 file cho đỡ phá. 💀
       </div>
-
-      <div class="screen-box">
-        <div class="mini-status">
-          <span>Premium Locked</span>
-          <span id="clock">19:10</span>
-        </div>
-        <input type="text" id="display" class="display" readonly placeholder="0" />
-      </div>
-
-      <div class="buttons">
-        <button onclick="clearDisplay()" class="special">C</button>
-        <button onclick="deleteLast()" class="special">⌫</button>
-        <button onclick="appendValue('%')" class="operator">%</button>
-        <button onclick="appendValue('/')" class="operator">÷</button>
-
-        <button onclick="appendValue('7')">7</button>
-        <button onclick="appendValue('8')">8</button>
-        <button onclick="appendValue('9')">9</button>
-        <button onclick="appendValue('*')" class="operator">×</button>
-
-        <button onclick="appendValue('4')">4</button>
-        <button onclick="appendValue('5')">5</button>
-        <button onclick="appendValue('6')">6</button>
-        <button onclick="appendValue('-')" class="operator">−</button>
-
-        <button onclick="appendValue('1')">1</button>
-        <button onclick="appendValue('2')">2</button>
-        <button onclick="appendValue('3')">3</button>
-        <button onclick="appendValue('+')" class="operator">+</button>
-
-        <button onclick="appendValue('0')" class="zero">0</button>
-        <button onclick="appendValue('.')">.</button>
-        <button onclick="showPremium()" class="equal">=</button>
-      </div>
-
-      <div class="kitty-footer">✨ Bấm = để mở phép màu... à nhầm, trả tiền ✨</div>
     </div>
   </div>
 
-  <div class="premium-overlay" id="premiumOverlay">
-    <div class="premium-modal">
+  <!-- Modal Premium -->
+  <div class="modal" id="premiumModal">
+    <div class="modal-box">
       <button class="close-btn" onclick="closePremium()">✕</button>
 
-      <div class="premium-head">
-        <h2>Upgrade to Premium 🎀</h2>
-        <p>Mở khóa phép tính bằng cách nạp tiền như một công dân gương mẫu.</p>
-        <div class="premium-badge">✨ HELLO KITTY VIP ACCESS ✨</div>
+      <div class="modal-head">
+        <h2>🎀 Upgrade to Premium 🎀</h2>
+        <p>
+          Oops~ Tính kết quả là tính năng VIP nha 🩷<br />
+          Muốn biết đáp án? Trả tiền. Đúng tinh thần internet hiện đại.
+        </p>
       </div>
 
       <div class="plans">
-        <div class="plan" data-plan="week" data-price="49.000" onclick="selectPlan(this)">
-          <div class="emoji">💗</div>
-          <h3>Gói Tuần</h3>
-          <div class="price">49K</div>
-          <div class="sub">7 ngày đáng yêu</div>
+        <div class="plan">
+          <h3>💗 Gói Tuần</h3>
+          <div class="price">49K <small>/ tuần</small></div>
           <ul>
-            <li>Mở khóa dấu bằng</li>
-            <li>Hiệu ứng tim bay</li>
-            <li>Giao diện siêu hồng</li>
-            <li>Calculator VIP</li>
+            <li>✔ Xem kết quả phép tính</li>
+            <li>✔ Giao diện hồng premium</li>
+            <li>✔ Hiệu ứng tim lung tung</li>
+            <li>✔ Ưu tiên... giả vờ</li>
           </ul>
+          <button class="buy-btn" onclick="buyPlan('Gói Tuần - 49K')">Mua ngay 💖</button>
         </div>
 
-        <div class="plan popular selected" data-plan="month" data-price="199.000" onclick="selectPlan(this)">
-          <div class="emoji">🎀</div>
-          <h3>Gói Tháng</h3>
-          <div class="price">199K</div>
-          <div class="sub">30 ngày premium</div>
+        <div class="plan popular">
+          <div class="ribbon">HOT</div>
+          <h3>🎀 Gói Tháng</h3>
+          <div class="price">199K <small>/ tháng</small></div>
           <ul>
-            <li>Tất cả tính năng tuần</li>
-            <li>Ưu tiên xử lý giả vờ</li>
-            <li>Animation xịn hơn</li>
-            <li>Best value</li>
+            <li>✔ Tất cả tính năng gói tuần</li>
+            <li>✔ Hiệu ứng sang chảnh hơn</li>
+            <li>✔ Huy hiệu VIP Kitty</li>
+            <li>✔ Trải nghiệm đốt tiền ổn định</li>
           </ul>
+          <button class="buy-btn" onclick="buyPlan('Gói Tháng - 199K')">Mua ngay 🌸</button>
         </div>
 
-        <div class="plan" data-plan="year" data-price="999.000" onclick="selectPlan(this)">
-          <div class="emoji">👑</div>
-          <h3>Gói Năm</h3>
-          <div class="price">999K</div>
-          <div class="sub">365 ngày hoàng gia</div>
+        <div class="plan">
+          <h3>👑 Gói Năm</h3>
+          <div class="price">999K <small>/ năm</small></div>
           <ul>
-            <li>Tất cả tính năng tháng</li>
-            <li>VIP huyền thoại</li>
-            <li>Glow hồng tối đa</li>
-            <li>Đẳng cấp không ai hỏi</li>
+            <li>✔ Full bộ tính năng VIP</li>
+            <li>✔ Giao diện nữ hoàng mèo</li>
+            <li>✔ Hiệu ứng premium max level</li>
+            <li>✔ Cảm giác giàu hơn một chút</li>
           </ul>
+          <button class="buy-btn" onclick="buyPlan('Gói Năm - 999K')">Mua ngay ✨</button>
         </div>
       </div>
 
       <div class="payment-box">
-        <h4>Chọn phương thức thanh toán 💳</h4>
-        <div class="payment-methods">
-          <div class="method active" onclick="selectMethod(this)">Momo</div>
-          <div class="method" onclick="selectMethod(this)">ZaloPay</div>
-          <div class="method" onclick="selectMethod(this)">Banking</div>
-          <div class="method" onclick="selectMethod(this)">Visa</div>
+        <h3>💳 Phương thức thanh toán giả lập</h3>
+        <div class="payment-grid">
+          <div class="payment-item">🏦 MB Bank: 1234 5678 9999</div>
+          <div class="payment-item">📱 Momo: 0900 123 456</div>
+          <div class="payment-item">🧾 Nội dung CK: BUY KITTY VIP</div>
+          <div class="payment-item">🔒 Trạng thái: Fake demo only</div>
         </div>
 
-        <button class="buy-btn" onclick="startPurchase()">
-          Mua Premium ngay - <span id="buyPrice">199.000đ</span>
-        </button>
-
-        <div class="loading-area" id="loadingArea">
-          <div class="loading-text" id="loadingText">Đang xử lý Premium...</div>
-          <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-          </div>
+        <div class="success" id="successBox">
+          🩷 Thanh toán thành công (giả lập)!<br />
+          Chào mừng đến với Hello Kitty Premium VIP ✨
         </div>
 
-        <div class="success-box" id="successBox">
-          <h4>Thanh toán thành công 🎉</h4>
-          <p id="successText">
-            Premium đã được kích hoạt. Nhưng vì đây là trò đùa xinh đẹp nên máy tính vẫn không tính đâu 💖
-          </p>
+        <div class="tiny-note">
+          Đây là giao diện demo để làm web đẹp mắt.<br />
+          Không có backend thật, nên bấm mua chỉ hiện hiệu ứng thôi.
         </div>
       </div>
-
-      <div class="sparkles" id="sparkles"></div>
     </div>
   </div>
 
   <script>
     const display = document.getElementById("display");
-    const premiumOverlay = document.getElementById("premiumOverlay");
-    const buyPrice = document.getElementById("buyPrice");
-    const loadingArea = document.getElementById("loadingArea");
-    const progressFill = document.getElementById("progressFill");
-    const loadingText = document.getElementById("loadingText");
+    const premiumModal = document.getElementById("premiumModal");
     const successBox = document.getElementById("successBox");
-    const successText = document.getElementById("successText");
-    const sparkles = document.getElementById("sparkles");
-
-    let selectedPlan = "month";
-    let selectedPrice = "199.000";
-    let selectedMethod = "Momo";
-    let purchaseInterval = null;
+    const floatingHearts = document.getElementById("floatingHearts");
 
     function appendValue(value) {
       if (display.value === "0" && value !== ".") {
@@ -796,207 +796,98 @@
       } else {
         display.value += value;
       }
-      buttonBurst();
+      burstSparkles();
     }
 
     function clearDisplay() {
       display.value = "";
-      buttonBurst();
+      burstSparkles();
     }
 
     function deleteLast() {
       display.value = display.value.slice(0, -1);
-      buttonBurst();
+      burstSparkles();
     }
 
     function showPremium() {
-      premiumOverlay.classList.add("active");
-      createSparkleBurst();
-      resetPurchaseUI();
+      premiumModal.classList.add("show");
+      document.body.style.overflow = "hidden";
+      burstSparkles(18);
     }
 
     function closePremium() {
-      premiumOverlay.classList.remove("active");
-      resetPurchaseUI();
+      premiumModal.classList.remove("show");
+      document.body.style.overflow = "auto";
+      successBox.classList.remove("show");
     }
 
-    function selectPlan(planEl) {
-      document.querySelectorAll(".plan").forEach(plan => plan.classList.remove("selected"));
-      planEl.classList.add("selected");
-
-      selectedPlan = planEl.dataset.plan;
-      selectedPrice = planEl.dataset.price;
-      buyPrice.textContent = selectedPrice + "đ";
-
-      createSparkleBurst();
+    function buyPlan(planName) {
+      successBox.innerHTML = `🩷 Đã chọn <strong>${planName}</strong><br>Thanh toán thành công (giả lập)! Welcome to Premium ✨`;
+      successBox.classList.add("show");
+      burstSparkles(28);
     }
 
-    function selectMethod(methodEl) {
-      document.querySelectorAll(".method").forEach(method => method.classList.remove("active"));
-      methodEl.classList.add("active");
-      selectedMethod = methodEl.textContent;
+    function calculateResult() {
+      showPremium();
     }
 
-    function resetPurchaseUI() {
-      if (purchaseInterval) {
-        clearInterval(purchaseInterval);
-        purchaseInterval = null;
-      }
-      loadingArea.classList.remove("active");
-      successBox.classList.remove("active");
-      progressFill.style.width = "0%";
-      loadingText.textContent = "Đang xử lý Premium...";
-    }
+    document.addEventListener("keydown", function (e) {
+      const key = e.key;
 
-    function startPurchase() {
-      resetPurchaseUI();
-      loadingArea.classList.add("active");
-
-      let progress = 0;
-      const messages = [
-        "Đang kết nối cổng thanh toán...",
-        "Đang xác minh độ đáng yêu...",
-        "Đang cấp quyền Hello Kitty VIP...",
-        "Đang mở khóa dấu bằng...",
-        "Đang hoàn tất phép màu..."
-      ];
-
-      purchaseInterval = setInterval(() => {
-        progress += Math.floor(Math.random() * 12) + 8;
-        if (progress > 100) progress = 100;
-
-        progressFill.style.width = progress + "%";
-
-        const msgIndex = Math.min(
-          Math.floor((progress / 100) * messages.length),
-          messages.length - 1
-        );
-        loadingText.textContent = messages[msgIndex];
-
-        if (progress >= 100) {
-          clearInterval(purchaseInterval);
-          purchaseInterval = null;
-
-          setTimeout(() => {
-            loadingArea.classList.remove("active");
-            successBox.classList.add("active");
-
-            const planLabel =
-              selectedPlan === "week" ? "Gói Tuần" :
-              selectedPlan === "month" ? "Gói Tháng" :
-              "Gói Năm";
-
-            successText.innerHTML = `
-              Bạn đã mua <b>${planLabel}</b> qua <b>${selectedMethod}</b> với giá <b>${selectedPrice}đ</b> 🎀<br>
-              Premium đã bật thành công. Nhưng vì đây là máy tính lừa đảo đáng yêu nên dấu <b>=</b> vẫn chỉ mở popup thôi 💖
-            `;
-
-            createMegaBurst();
-          }, 400);
-        }
-      }, 180);
-    }
-
-    function buttonBurst() {
-      const calc = document.querySelector(".calculator");
-      calc.animate(
-        [
-          { transform: "scale(1)" },
-          { transform: "scale(1.01)" },
-          { transform: "scale(1)" }
-        ],
-        {
-          duration: 120,
-          easing: "ease-out"
-        }
-      );
-    }
-
-    function createSparkleBurst() {
-      const icons = ["✨", "💖", "🎀", "💗", "🌸"];
-      for (let i = 0; i < 14; i++) {
-        const s = document.createElement("div");
-        s.className = "sparkle";
-        s.textContent = icons[Math.floor(Math.random() * icons.length)];
-        s.style.left = Math.random() * 100 + "%";
-        s.style.top = Math.random() * 100 + "%";
-        s.style.setProperty("--x", (Math.random() * 180 - 90) + "px");
-        s.style.setProperty("--y", (Math.random() * 180 - 90) + "px");
-        sparkles.appendChild(s);
-
-        setTimeout(() => s.remove(), 1200);
-      }
-    }
-
-    function createMegaBurst() {
-      createSparkleBurst();
-      setTimeout(createSparkleBurst, 180);
-      setTimeout(createSparkleBurst, 360);
-    }
-
-    function spawnFloatingDecor() {
-      const hearts = document.getElementById("hearts");
-      const stars = document.getElementById("stars");
-      const heartIcons = ["💖", "💗", "💕", "🌸"];
-      const starIcons = ["✨", "⭐", "🎀"];
-
-      setInterval(() => {
-        const h = document.createElement("div");
-        h.className = "heart";
-        h.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
-        h.style.left = Math.random() * 100 + "%";
-        h.style.animationDuration = (6 + Math.random() * 5) + "s";
-        h.style.fontSize = (14 + Math.random() * 12) + "px";
-        hearts.appendChild(h);
-
-        setTimeout(() => h.remove(), 12000);
-      }, 500);
-
-      setInterval(() => {
-        const s = document.createElement("div");
-        s.className = "star";
-        s.textContent = starIcons[Math.floor(Math.random() * starIcons.length)];
-        s.style.left = Math.random() * 100 + "%";
-        s.style.animationDuration = (7 + Math.random() * 5) + "s";
-        s.style.fontSize = (12 + Math.random() * 10) + "px";
-        stars.appendChild(s);
-
-        setTimeout(() => s.remove(), 12000);
-      }, 700);
-    }
-
-    function updateClock() {
-      const clock = document.getElementById("clock");
-      const now = new Date();
-      const h = String(now.getHours()).padStart(2, "0");
-      const m = String(now.getMinutes()).padStart(2, "0");
-      clock.textContent = `${h}:${m}`;
-    }
-
-    document.addEventListener("keydown", (e) => {
-      const allowed = "0123456789+-*/.%";
-
-      if (allowed.includes(e.key)) {
-        appendValue(e.key);
-      } else if (e.key === "Backspace") {
+      if (!isNaN(key) || ["+", "-", "*", "/", ".", "%"].includes(key)) {
+        appendValue(key);
+      } else if (key === "Backspace") {
         deleteLast();
-      } else if (e.key === "Escape") {
-        clearDisplay();
-      } else if (e.key === "Enter" || e.key === "=") {
+      } else if (key === "Escape") {
+        closePremium();
+      } else if (key === "Enter" || key === "=") {
         e.preventDefault();
-        showPremium();
+        calculateResult();
       }
     });
 
-    premiumOverlay.addEventListener("click", (e) => {
-      if (e.target === premiumOverlay) {
+    premiumModal.addEventListener("click", function (e) {
+      if (e.target === premiumModal) {
         closePremium();
       }
     });
 
-    updateClock();
-    setInterval(updateClock, 1000);
-    spawnFloatingDecor();
+    function createFloatingHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = Math.random() > 0.5 ? "💖" : "🎀";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+      heart.style.fontSize = (14 + Math.random() * 18) + "px";
+      heart.style.opacity = 0.4 + Math.random() * 0.6;
+      floatingHearts.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 11000);
+    }
+
+    setInterval(createFloatingHeart, 650);
+
+    function burstSparkles(count = 8) {
+      for (let i = 0; i < count; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        sparkle.textContent = Math.random() > 0.5 ? "✨" : "💖";
+        sparkle.style.left = (window.innerWidth / 2 + (Math.random() * 180 - 90)) + "px";
+        sparkle.style.top = (window.innerHeight / 2 + (Math.random() * 180 - 90)) + "px";
+        sparkle.style.setProperty("--x", (Math.random() * 240 - 120) + "px");
+        sparkle.style.setProperty("--y", (Math.random() * 240 - 120) + "px");
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 1100);
+      }
+    }
+
+    // Initial cute hearts
+    for (let i = 0; i < 12; i++) {
+      setTimeout(createFloatingHeart, i * 180);
+    }
   </script>
 </body>
 </html>
